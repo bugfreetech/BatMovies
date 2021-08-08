@@ -1,0 +1,38 @@
+<div class="container movies" >
+  <div class="movies-filter">
+    <button class="movies__filter"
+		*ngFor="let filter of decadeFilters"
+		[ngClass]="{'movies__filter--active': filter.active}"
+		(click)="updateActiveFilter(filter);"
+		type="button"
+    >
+		{{filter.label}}
+    </button>
+  </div>
+
+  <div *ngIf="MoviesArray.length">
+	<div class="movie" *ngFor="let movie of MoviesArray | byDecade:activeFilter">
+		<div class="movie__image">
+			<img src="{{movie.Poster}}" alt="{{movie.Title}}" />
+		</div>
+		<div class="movie__details">
+			<div class="movie__inner">
+				<h2 class="movie__title">{{movie.Title}}</h2>
+				<div class="movie__meta">
+					<span class="movie__rating">{{movie.Rated || 'NR'}}</span>
+					<span class="movie__runtime" *ngIf="movie.Runtime">{{movie.Runtime}}</span>
+					<span class="movie__released" *ngIf="movie.Released">{{movie.Released}}</span>
+				</div>
+				<div class="movie__plot">{{movie.Plot}}</div>
+			</div>
+			<div class="movie__footer" *ngIf="movie.imdbID">
+				<a class="movie__button"
+					href="//imdb.com/title/{{movie.imdbID}}"
+					title="View '{{movie.Title}}' on IMDB"
+					target="_blank"
+				>View on IMDB</a>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
